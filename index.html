@@ -13,91 +13,169 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 
+<style>
+
+.centered-text {
+    text-align:center
+}
+
+</style>
+
 <body>
-    <div class="row">
-
-        <div class="col-sm-4"></div>
-
-        <div class="col-sm-8">
-            <h1>Trivia Game</h1>
-        </div>
-
-        <div class="col-sm-4"></div>
-    </div>
-
+    <div class="centered-text"><h1>Trivia Game</h1></div>
 
     <container id=container>
 
-    <div class="row">
 
-        <div class="col-sm-4"></div>
-
-        <div class="col-sm-8">
-            <div id="question">Question</div>
-        </div>
-
-        <div class="col-sm-4"></div>
-
-    </div>
+    <div class="centered-text" id="question">Question</div>
     
     <div class="row">
 
-        <div class="col-sm-4"></div>
+        <div class="col-sm-2"></div>
 
         <div class="col-sm-4">
-            <div class="answer" id="option-1" data-value=true>Option 1</div>
+            <div class="centered-text">
+                <div class="answer" id="option 1" data-value=true>Option 1</div>
+            </div>
         </div>
 
         <div class="col-sm-4">
-            <div class="answer" id="option 2" data-value=false>Option 2</div>
+            <div class="centered-text">
+                <div class="answer" id="option 2" data-value=false>Option 2</div>
+            </div>
         </div>
 
-        <div class="col-sm-4"></div>
+        <div class="col-sm-2"></div>
+
 
     </div>
 
     <div class="row">
 
-        <div class="col-sm-4"></div>
+        <div class="col-sm-2"></div>
 
         <div class="col-sm-4">
-            <div class="answer" id="option-3" data-value=false>Option 3</div>
+            <div class="centered-text">
+                <div class="answer" id="option 3" data-value=false>Option 3</div>
+            </div>
         </div>
-
+    
         <div class="col-sm-4">
-            <div class="answer" id="option 4" data-value=false>Option 4</div>
+            <div class="centered-text">
+                <div class="answer" id="option 4" data-value=false>Option 4</div>
+            </div>
         </div>
 
-        <div class="col-sm-4"></div>
+        <div class="col-sm-2"></div>
+        
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-2"></div>
+
+        <div class="col-sm-8">
+            <div class="centered-text" id="counter"></div>
         </div>
+
+        <div class="col-sm-2"></div>
+
+    </div>
 
     </container>
 
 
-
-
     <script>
-        window.onload = function() {
-            $(".answer").on("click", test);
-        };
+
+        var trivQuestion = [
+            quest1 = {
+                question: [{
+                    question: "Question 1"
+                    }, {
+                    answer: "Right"
+                    },{
+                    wrong1: "Wrong 1"
+                    }, {
+                    wrong2: "Wrong 2"
+                    },{
+                    wrong3: "Wrong 3"
+                }]
+            },
+            quest2 = {
+                question: [{
+                    question: "Question 2"
+                    }, {
+                    answer: "Right"
+                    },{
+                    wrong1: "Wrong 1"
+                    }, {
+                    wrong2: "Wrong 2"
+                    },{
+                    wrong3: "Wrong 3"
+                }]
+            },
+            quest3 = {
+                question: [{
+                    question: "Question 3"
+                    }, {
+                    answer: "Right"
+                    },{
+                    wrong1: "Wrong 1"
+                    }, {
+                    wrong2: "Wrong 2"
+                    },{
+                    wrong3: "Wrong 3"
+                }]
+            }
+        ]
+
+
+        var timerCount = 10;
+        var questCount = 0;
+        
+        var trivTimer
+        var countTimer
+
+        function questionDisplay(num) {
+            $("#question").text(trivQuestion[num].question[0].question);
+            console.log(trivQuestion[num].question[0].question)
+        }
+
+        function counter() {
+            timerCount--;
+            console.log(timerCount);
+            $("#counter").text(timerCount);
+        }
+
+        function timerStart() {
+            trivTimer = setTimeout(next, timerCount*1000);
+            countTimer = setInterval(counter, 1000);
+            $("#counter").text(timerCount);
+        }
+        
+        function timerReset() {
+            timerCount = 10;
+            clearInterval(countTimer);
+        }
+
+        function next() {
+            $("#container").remove();
+            console.log("container emptied");
+            timerReset();
+        }
 
         function test() {
             console.log($(this).attr("data-value"));
         }
 
-        var trivQuest = {
-            question1: [{
-                question: "Question"
-                }, {
-                answer: "Right"
-                },{
-                wrong1: "Wrong 1"
-                }, {
-                wrong2: "Wrong 2"
-                },{
-                wrong3: "Wrong 3"
-            }]
-        }
+
+        window.onload = function() {
+            $(".answer").on("click", test);
+        };
+
+        questionDisplay(1);
+        timerStart();
+
 
     </script>
     
