@@ -35,13 +35,13 @@
 
         <div class="col-sm-4">
             <div class="centered-text">
-                <div class="answer" id="option 1" data-value=true>Option 1</div>
+                <div class="answer" id="option-0" data-value=true>Option 1</div>
             </div>
         </div>
 
         <div class="col-sm-4">
             <div class="centered-text">
-                <div class="answer" id="option 2" data-value=false>Option 2</div>
+                <div class="answer" id="option-1" data-value=false>Option 2</div>
             </div>
         </div>
 
@@ -56,13 +56,13 @@
 
         <div class="col-sm-4">
             <div class="centered-text">
-                <div class="answer" id="option 3" data-value=false>Option 3</div>
+                <div class="answer" id="option-2" data-value=false>Option 3</div>
             </div>
         </div>
     
         <div class="col-sm-4">
             <div class="centered-text">
-                <div class="answer" id="option 4" data-value=false>Option 4</div>
+                <div class="answer" id="option-3" data-value=false>Option 4</div>
             </div>
         </div>
 
@@ -89,79 +89,101 @@
 
         var trivQuestion = [
             quest1 = {
-                question: [{
-                    question: "Question 1"
-                    }, {
-                    answer: "Right"
-                    },{
-                    wrong1: "Wrong 1"
-                    }, {
-                    wrong2: "Wrong 2"
-                    },{
-                    wrong3: "Wrong 3"
-                }]
+                question: "question 1",
+                answers: ["right", "wrong", "wrong", "wrong"],
             },
             quest2 = {
-                question: [{
-                    question: "Question 2"
-                    }, {
-                    answer: "Right"
-                    },{
-                    wrong1: "Wrong 1"
-                    }, {
-                    wrong2: "Wrong 2"
-                    },{
-                    wrong3: "Wrong 3"
-                }]
+                question: "question 2",
+                answers: ["right", "wrong", "wrong", "wrong"],
             },
             quest3 = {
-                question: [{
-                    question: "Question 3"
-                    }, {
-                    answer: "Right"
-                    },{
-                    wrong1: "Wrong 1"
-                    }, {
-                    wrong2: "Wrong 2"
-                    },{
-                    wrong3: "Wrong 3"
-                }]
+                question: "question 3",
+                answers: ["right", "wrong", "wrong", "wrong"],
+            },
+            quest4 = {
+                question: "question 3",
+                answers: ["right", "wrong", "wrong", "wrong"],
+            },
+            quest5 = {
+                question: "question 3",
+                answers: ["right", "wrong", "wrong", "wrong"],
             }
         ]
 
 
+
         var timerCount = 10;
         var questCount = 0;
+        var disArrayCount = 0;
+        clockRunning = false;
+        displayArray = [0, 1, 2, 3]
         
         var trivTimer
         var countTimer
 
+        function shuffleArray(array) {  //used to shuffle the array of answers
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+
         function questionDisplay(num) {
-            $("#question").text(trivQuestion[num].question[0].question);
-            console.log(trivQuestion[num].question[0].question)
+            $("#question").text(trivQuestion[num].question);
+            shuffleArray(displayArray);
+            displayArray.forEach(function(str) {
+                console.log(str);
+            })
+            displayArray.forEach(function(str) {
+                $("#option-"+ str).text(trivQuestion[num].answers[disArrayCount])
+                if (disArrayCount === 0) {
+                    $("#option-" + str).attr("data-value", true);
+                } else {
+                    $("#option-"+ str).attr("data-value", false);
+                }
+
+                disArrayCount++;
+            })
+            disArrayCount = 0;
+
+            timerStart();
+        }
+
+        function display() {
+
         }
 
         function counter() {
             timerCount--;
-            console.log(timerCount);
+            // console.log(timerCount);
             $("#counter").text(timerCount);
         }
 
         function timerStart() {
+            if (clockRunning) {
+                return;
+            }
+
             trivTimer = setTimeout(next, timerCount*1000);
             countTimer = setInterval(counter, 1000);
             $("#counter").text(timerCount);
+            clockRunning = true;
         }
         
         function timerReset() {
             timerCount = 10;
             clearInterval(countTimer);
+            clockRunning = false;
         }
 
         function next() {
-            $("#container").remove();
-            console.log("container emptied");
+            // $("#container").remove();
+            questCount++;
             timerReset();
+            questionDisplay(questCount);
+            timerStart();
         }
 
         function test() {
@@ -171,10 +193,14 @@
 
         window.onload = function() {
             $(".answer").on("click", test);
+            // $(".answer").hover(test); //used to test hover
         };
 
-        questionDisplay(1);
-        timerStart();
+        function gameStart() {
+            questionDisplay(questCount);
+        }
+
+        gameStart();
 
 
     </script>
