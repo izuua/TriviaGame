@@ -84,6 +84,26 @@
 
     </container>
 
+    <div class="row">
+
+            <div class="col-sm-2"></div>
+    
+            <div class="col-sm-4">
+                <div class="centered-text">
+                    <div id="right"></div>
+                </div>
+            </div>
+        
+            <div class="col-sm-4">
+                <div class="centered-text">
+                    <div id="wrong"></div>
+                </div>
+            </div>
+    
+            <div class="col-sm-2"></div>
+            
+        </div>
+
 
     <script>
 
@@ -101,25 +121,27 @@
                 answers: ["right", "wrong", "wrong", "wrong"],
             },
             quest4 = {
-                question: "question 3",
+                question: "question 4",
                 answers: ["right", "wrong", "wrong", "wrong"],
             },
             quest5 = {
-                question: "question 3",
+                question: "question 5",
                 answers: ["right", "wrong", "wrong", "wrong"],
             }
         ]
 
-
-
         var timerCount = 10;
         var questCount = 0;
         var disArrayCount = 0;
-        clockRunning = false;
-        displayArray = [0, 1, 2, 3]
-        
+        var wins = 0;
+        var losses = 0;
         var trivTimer
         var countTimer
+        var clockRunning = false;
+        var gameOver = false;
+        var displayArray = [0, 1, 2, 3]
+
+        //Done defining variables
 
         function shuffleArray(array) {  //used to shuffle the array of answers
             for (var i = array.length - 1; i > 0; i--) {
@@ -151,9 +173,6 @@
             timerStart();
         }
 
-        function display() {
-
-        }
 
         function counter() {
             timerCount--;
@@ -166,7 +185,7 @@
                 return;
             }
 
-            trivTimer = setTimeout(next, timerCount*1000);
+            trivTimer = setTimeout(timeUp, timerCount*1000);
             countTimer = setInterval(counter, 1000);
             $("#counter").text(timerCount);
             clockRunning = true;
@@ -174,31 +193,67 @@
         
         function timerReset() {
             timerCount = 10;
+
+            if (!clockRunning) {
+                return;
+            }
+
             clearInterval(countTimer);
+            clearTimeout(trivTimer);
             clockRunning = false;
         }
 
         function next() {
-            // $("#container").remove();
             questCount++;
             timerReset();
+
+            if (questCount >= 5) {
+                results();
+                gameOver = true;
+                return;
+            }
+
             questionDisplay(questCount);
             timerStart();
+
         }
 
-        function test() {
+        function timeUp() {
+            losses++;
+            next();
+        }
+
+        function answer() {
             console.log($(this).attr("data-value"));
+            var test = $(this).attr("data-value");
+            if (test) {
+                wins++;
+                console.log("wins " + wins);
+            } 
+            
+            else {
+                losses++;
+                console.log("losses " + losses);
+            }
+            next();
         }
-
-
-        window.onload = function() {
-            $(".answer").on("click", test);
-            // $(".answer").hover(test); //used to test hover
-        };
 
         function gameStart() {
             questionDisplay(questCount);
         }
+
+        function results() {
+            $("#container").remove();
+            $("#right").text("Answers right: " + wins);
+            $("#wrong").text("Answers wrong: " + losses);
+        }
+
+        //Done defining functions
+
+        window.onload = function() {
+            $(".answer").on("click", answer);
+            // $(".answer").hover(test); //used to test hover
+        };
 
         gameStart();
 
