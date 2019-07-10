@@ -22,10 +22,9 @@
 </style>
 
 <body>
-    <div class="centered-text"><h1>Trivia Game</h1></div>
+    <div class="centered-text" id="header"><h1>Trivia Game</h1></div>
 
     <container id=container>
-
 
     <div class="centered-text" id="question">Question</div>
     
@@ -84,25 +83,31 @@
 
     </container>
 
-    <div class="row">
+    <container id = "container-results">
 
-            <div class="col-sm-2"></div>
+        <div class="row">
+
+                <div class="col-sm-2"></div>
     
-            <div class="col-sm-4">
-                <div class="centered-text">
-                    <div id="right"></div>
+                <div class="col-sm-4">
+                    <div class="centered-text">
+                        <div id="right"></div>
+                    </div>
                 </div>
-            </div>
         
-            <div class="col-sm-4">
-                <div class="centered-text">
-                    <div id="wrong"></div>
+                <div class="col-sm-4">
+                    <div class="centered-text">
+                        <div id="wrong"></div>
+                    </div>
                 </div>
-            </div>
     
-            <div class="col-sm-2"></div>
+                <div class="col-sm-2"></div>
             
         </div>
+
+        <div class="centered-text" id="results-timer"></div>
+
+    </container>
 
 
     <script>
@@ -131,15 +136,20 @@
         ]
 
         var timerCount = 10;
+        var resetCount = 10;
         var questCount = 0;
         var disArrayCount = 0;
         var wins = 0;
         var losses = 0;
         var trivTimer
         var countTimer
+        var gameResetTimer
+        var countResetTimer
         var clockRunning = false;
         var gameOver = false;
         var displayArray = [0, 1, 2, 3]
+        var container
+        var containerResults
 
         //Done defining variables
 
@@ -178,6 +188,11 @@
             timerCount--;
             // console.log(timerCount);
             $("#counter").text(timerCount);
+        }
+
+        function resetCounter() {
+            resetCount--
+            $("#results-timer").text("Time until next game: " + resetCount);
         }
 
         function timerStart() {
@@ -239,13 +254,35 @@
         }
 
         function gameStart() {
+            containerResults = $("#container-results").detach();
             questionDisplay(questCount);
         }
 
         function results() {
-            $("#container").remove();
+            container = $("#container").detach();
+            $("#header").append(containerResults);
             $("#right").text("Answers right: " + wins);
             $("#wrong").text("Answers wrong: " + losses);
+            gameOver = true;
+
+            gameResetTimer = setTimeout(reset, 10000);
+            countResetTimer = setInterval(resetCounter, 1000);
+            $("#results-timer").text("Time until next game: " + resetCount);
+        }
+
+        //Need to add reset function
+
+        function reset() {
+            clearTimeout(gameResetTimer);
+            clearTimeout(countResetTimer);
+            containerResults = $("#container-results").detach();
+            gameOver = false;
+            wins = 0;
+            losses = 0;
+            timerCount = 10;
+            questCount = 0;
+            $("#header").append(container);
+            gameStart();
         }
 
         //Done defining functions
