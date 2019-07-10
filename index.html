@@ -27,6 +27,11 @@
     font-size: 25px;
 }
 
+.big-bold {
+    font-size: 20px;
+    font-weight: bold;
+}
+
 </style>
 
 <body>
@@ -95,6 +100,38 @@
 
     </container>
 
+    <container id="container-explanation">
+        <div class="row">
+
+            <div class="col-sm-2"></div>
+        
+            <div class="col-sm-8 centered-text big-bold" id="explanation-wrong"></div>
+                    
+            <div class="col-sm-2"></div>
+        
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-2"></div>
+
+            <div class="col-sm-8 centered-text" id="explanation"></div>
+            
+            <div class="col-sm-2"></div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2"></div>
+
+            <div class="col-sm-8 centered-text" id="explanation-timer"></div>
+                
+            <div class="col-sm-2"></div>
+
+        </div>
+
+    </container>
+
     <container id = "container-results">
 
         <div class="row">
@@ -148,12 +185,12 @@
             quest5 = {
                 question: "Who was not part of the All-New, All-Different X-Men?",
                 answers: ["Psylocke", "Colossus", "Wolverine", "Nightcrawler"],
-                explanation: "Psylocke was not associated with the X-Men until over 10 years after the All-New, All-Different X-Men when she was rescued by the New Mutants (not the same team as the All-New, All-Different X-Men)",
+                explanation: "Psylocke was not associated with the X-Men until over 10 years after the All-New, All-Different X-Men when she was rescued by the New Mutants (not the same team as the All-New, All-Different X-Men.)",
             },
             quest6 = {
                 question: "Who is Jessica Jones married to?",
                 answers: ["Luke Cage", "Iron Fist", "Ghost Rider", "Punisher"],
-                explanation: "filler",
+                explanation: "Jessica Jones is married to fellow crime fighter, Luke Cage, and even have a daughter together!",
             },
             quest7 = {
                 question: "Which character was not part of the original Avengers team?",
@@ -164,6 +201,7 @@
 
         var timerCount = 10;
         var resetCount = 10;
+        var explanationCount = 10;
         var questCount = 0;
         var disArrayCount = 0;
         var wins = 0;
@@ -172,7 +210,10 @@
         var countTimer
         var gameResetTimer
         var countResetTimer
+        var explanationTimer
+        // var explanationCounter
         var clockRunning = false;
+        var explanationRunning = false;
         var gameOver = false;
         var displayArray = [0, 1, 2, 3]
         var container
@@ -190,6 +231,8 @@
         }
 
         function questionDisplay(num) {
+            $("#container-explanation").hide();
+            $("#container").show();
             $("#question").text(trivQuestion[num].question);
             shuffleArray(displayArray);
             displayArray.forEach(function(str) {
@@ -208,6 +251,16 @@
             disArrayCount = 0;
 
             timerStart();
+        }
+
+        function showExplanation() {
+            // explanationCount = 10;
+            $("#container").hide();
+            $("#container-explanation").show();
+            $("#explanation-wrong").text("WRONG!");
+            $("#explanation").text(trivQuestion[questCount].explanation);
+            $("#explanation-timer").text("Time until next question: 10 seconds");
+            explanationTimer = setTimeout(next, explanationCount*1000);
         }
 
 
@@ -246,6 +299,7 @@
         }
 
         function next() {
+            clearTimeout(explanationTimer);
             questCount++;
             timerReset();
 
@@ -262,7 +316,8 @@
 
         function timeUp() {
             losses++;
-            next();
+            showExplanation();
+            //next();
         }
 
         function answer() {
@@ -270,14 +325,15 @@
 
             if ($(this).attr("data-value") == "true") {
                 wins++;
-                console.log("wins " + wins);
+                next();
+                // console.log("wins " + wins);
             } 
             
             else {
                 losses++;
-                console.log("losses " + losses);
+                showExplanation();
+                // console.log("losses " + losses);
             }
-            next();
         }
 
         function gameStart() {
