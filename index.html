@@ -225,8 +225,8 @@
 
         function answer() {
             console.log($(this).attr("data-value"));
-            var test = $(this).attr("data-value");
-            if (test) {
+
+            if ($(this).attr("data-value") == "true") {
                 wins++;
                 console.log("wins " + wins);
             } 
