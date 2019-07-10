@@ -146,35 +146,20 @@
                 explanation: "Ragnarok is a cyborg clone of Thor created by Tony Stark, Reed Richards and Hank Pym who proved to be far too ruthless compared to Thor Odinson.",
             },
             quest5 = {
-                question: "question 5",
-                answers: ["right", "wrong", "wrong", "wrong"],
-                explanation: "filler",
+                question: "Who was not part of the All-New, All-Different X-Men?",
+                answers: ["Psylocke", "Colossus", "Wolverine", "Nightcrawler"],
+                explanation: "Psylocke was not associated with the X-Men until over 10 years after the All-New, All-Different X-Men when she was rescued by the New Mutants (not the same team as the All-New, All-Different X-Men)",
             },
             quest6 = {
-                question: "question 5",
-                answers: ["right", "wrong", "wrong", "wrong"],
+                question: "Who is Jessica Jones married to?",
+                answers: ["Luke Cage", "Iron Fist", "Ghost Rider", "Punisher"],
                 explanation: "filler",
             },
             quest7 = {
-                question: "question 5",
-                answers: ["right", "wrong", "wrong", "wrong"],
-                explanation: "filler",
-            },
-            quest8 = {
                 question: "Which character was not part of the original Avengers team?",
                 answers: ["Captain America", "Ant-Man", "Thor", "The Hulk"],
                 explanation: "While Captain America is part of the original movie team, he was not added to the comics version until issue #4.",
             },
-            quest9 = {
-                question: "question 5",
-                answers: ["right", "wrong", "wrong", "wrong"],
-                explanation: "filler",
-            },
-            quest10 = {
-                question: "question 5",
-                answers: ["right", "wrong", "wrong", "wrong"],
-                explanation: "filler",
-            }
         ]
 
         var timerCount = 10;
@@ -296,6 +281,7 @@
         }
 
         function gameStart() {
+            shuffleArray(trivQuestion);
             questionDisplay(questCount);
         }
 
