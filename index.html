@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivia Game</title>
+    <title>Marvel Comics Trivia</title>
     <!-- Added link to the jQuery Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Reset CSS -->
@@ -16,17 +16,27 @@
 <style>
 
 .centered-text {
-    text-align:center
+    text-align: center
+}
+
+.normal-text {
+    font-size: 15px;
+}
+
+.enlarged-text {
+    font-size: 25px;
 }
 
 </style>
 
 <body>
-    <div class="centered-text" id="header"><h1>Trivia Game</h1></div>
+    <div class="centered-text" id="header"><h1>Marvel Comics Trivia</h1></div>
 
     <container id=container>
 
     <div class="centered-text" id="question">Question</div>
+
+    <div class="jumbotron">
     
     <div class="row">
 
@@ -34,13 +44,13 @@
 
         <div class="col-sm-4">
             <div class="centered-text">
-                <div class="answer" id="option-0" data-value=true>Option 1</div>
+                <div class="answer normal-text" id="option-0" data-value=true>Option 1</div>
             </div>
         </div>
 
         <div class="col-sm-4">
             <div class="centered-text">
-                <div class="answer" id="option-1" data-value=false>Option 2</div>
+                <div class="answer normal-text" id="option-1" data-value=false>Option 2</div>
             </div>
         </div>
 
@@ -55,18 +65,20 @@
 
         <div class="col-sm-4">
             <div class="centered-text">
-                <div class="answer" id="option-2" data-value=false>Option 3</div>
+                <div class="answer normal-text" id="option-2" data-value=false>Option 3</div>
             </div>
         </div>
     
         <div class="col-sm-4">
             <div class="centered-text">
-                <div class="answer" id="option-3" data-value=false>Option 4</div>
+                <div class="answer normal-text" id="option-3" data-value=false>Option 4</div>
             </div>
         </div>
 
         <div class="col-sm-2"></div>
         
+    </div>
+
     </div>
 
     <div class="row">
@@ -114,24 +126,54 @@
 
         var trivQuestion = [
             quest1 = {
-                question: "question 1",
-                answers: ["right", "wrong", "wrong", "wrong"],
+                question: "Who was not part of the original X-Men team?",
+                answers: ["Wolverine", "Cyclops", "Iceman", "Jean Grey"],
+                explanation: "Wolverine was not a part of the X-Men team until over 10 years after their debut as part of the All-New, All-Different X-Men.",
             },
             quest2 = {
-                question: "question 2",
-                answers: ["right", "wrong", "wrong", "wrong"],
+                question: "Which character created Ultron?",
+                answers: ["Hank Pym", "Tony Stark", "Bruce Banner", "Reed Richards"],
+                explanation: "While Tony Stark and Bruce Banner created Ultron in the movies, Hank Pym (Ant-Man) was the original creator in the comics.",
             },
             quest3 = {
-                question: "question 3",
-                answers: ["right", "wrong", "wrong", "wrong"],
+                question: "Who has not taken the mantle of Captain America?",
+                answers: ["Hank Pym", "Bucky Barnes", "Sam Wilson", "Steve Rogers"],
+                explanation: "Steve Rogers was the original Captain America. Bucky Barnes  (Winter Soldier) took over the mantle after the death of Steve Rogers. Sam Wilson (Falcon) became Captain America following Steve Roger's loss of his power. Meanwhile, Hank Pym has had a host of alias but has never been Captain America.",
             },
             quest4 = {
-                question: "question 4",
-                answers: ["right", "wrong", "wrong", "wrong"],
+                question: "Which Thor killed Bill Foster (Goliath) during the events of Civil War?",
+                answers: ["Ragnarok", "Eric Masterson", "Thor Odinson", "Jane Foster"],
+                explanation: "Ragnarok is a cyborg clone of Thor created by Tony Stark, Reed Richards and Hank Pym who proved to be far too ruthless compared to Thor Odinson.",
             },
             quest5 = {
                 question: "question 5",
                 answers: ["right", "wrong", "wrong", "wrong"],
+                explanation: "filler",
+            },
+            quest6 = {
+                question: "question 5",
+                answers: ["right", "wrong", "wrong", "wrong"],
+                explanation: "filler",
+            },
+            quest7 = {
+                question: "question 5",
+                answers: ["right", "wrong", "wrong", "wrong"],
+                explanation: "filler",
+            },
+            quest8 = {
+                question: "Which character was not part of the original Avengers team?",
+                answers: ["Captain America", "Ant-Man", "Thor", "The Hulk"],
+                explanation: "While Captain America is part of the original movie team, he was not added to the comics version until issue #4.",
+            },
+            quest9 = {
+                question: "question 5",
+                answers: ["right", "wrong", "wrong", "wrong"],
+                explanation: "filler",
+            },
+            quest10 = {
+                question: "question 5",
+                answers: ["right", "wrong", "wrong", "wrong"],
+                explanation: "filler",
             }
         ]
 
@@ -222,7 +264,7 @@
             questCount++;
             timerReset();
 
-            if (questCount >= 5) {
+            if (questCount >= trivQuestion.length) {
                 results();
                 gameOver = true;
                 return;
@@ -286,11 +328,19 @@
             gameStart();
         }
 
+        function runHover() {
+            $(this).attr("class", "answer enlarged-text");
+        }
+
+        function unhover() {
+            $(this).attr("class", "answer normal-text");
+        }
+
         //Done defining functions
 
         window.onload = function() {
             $(".answer").on("click", answer);
-            // $(".answer").hover(test); //used to test hover
+            $(".answer").hover(runHover, unhover);
         };
 
         gameStart();
