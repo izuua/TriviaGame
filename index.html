@@ -254,11 +254,11 @@
         }
 
         function gameStart() {
-            containerResults = $("#container-results").detach();
             questionDisplay(questCount);
         }
 
         function results() {
+            console.log("Results function ran");
             container = $("#container").detach();
             $("#header").append(containerResults);
             $("#right").text("Answers right: " + wins);
@@ -281,6 +281,7 @@
             losses = 0;
             timerCount = 10;
             questCount = 0;
+            resetCount = 10;
             $("#header").append(container);
             gameStart();
         }
