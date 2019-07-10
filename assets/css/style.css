@@ -1,31 +1,16 @@
-body {
-      background: url(https://cdn.pixabay.com/photo/2015/12/03/08/50/paper-1074131_1280.jpg)
-    }
-
-.crystal-image {
-      width: 300px;
-      height: 300px;
-}
-
-h1 {
-      font-size: 30px;
-      font-weight: bold;
-}
-
-.counter {
+.centered-text {
+      text-align: center
+  }
+  
+  .normal-text {
+      font-size: 15px;
+  }
+  
+  .enlarged-text {
       font-size: 25px;
+  }
+  
+  .big-bold {
+      font-size: 20px;
       font-weight: bold;
-}
-
-.win-loss-display {
-      font-size: 50px;
-      font-weight: bold;
-}
-
-.image {
-      height: 500px;
-      margin: 0 auto;
-      display: block;
-      float: none;
-      position: relative;
-}
+  }
