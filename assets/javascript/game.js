@@ -39,22 +39,22 @@ var trivQuestion = [
 var timerCount = 10;
 var resetCount = 10;
 var explanationCount = 10;
-var questCount = 0;
+var questCount = 0; //keeps track of which question is being displayed
 var disArrayCount = 0;
 var wins = 0;
 var losses = 0;
-var trivTimer
-var countTimer
-var gameResetTimer
-var countResetTimer
-var explanationTimer
+var trivTimer;
+var countTimer;
+var gameResetTimer;
+var countResetTimer;
+var explanationTimer;
 // var explanationCounter
 var clockRunning = false;
 var explanationRunning = false;
 var gameOver = false;
-var displayArray = [0, 1, 2, 3]
-var container
-var containerResults
+var displayArray = [0, 1, 2, 3];
+var container;
+var containerResults;
 
 //Done defining variables
 
@@ -67,7 +67,7 @@ function shuffleArray(array) {  //used to shuffle the array of answers
   }
 }
 
-function questionDisplay(num) {
+function questionDisplay(num) { //used to display the question information
   $("#container-explanation").hide();
   $("#container").show();
   $("#question").text(trivQuestion[num].question);
@@ -90,7 +90,7 @@ function questionDisplay(num) {
   timerStart();
 }
 
-function showExplanation() {
+function showExplanation() { //shows the user why their answer was incorrect
   // explanationCount = 10;
   $("#container").hide();
   $("#container-explanation").show();
@@ -112,7 +112,7 @@ function resetCounter() {
   $("#results-timer").text("Time until next game: " + resetCount);
 }
 
-function timerStart() {
+function timerStart() { //start the timer for the user to answer
   if (clockRunning) {
       return;
   }
@@ -123,7 +123,7 @@ function timerStart() {
   clockRunning = true;
 }
 
-function timerReset() {
+function timerReset() { //resets the timer
   timerCount = 10;
 
   if (!clockRunning) {
@@ -135,7 +135,7 @@ function timerReset() {
   clockRunning = false;
 }
 
-function next() {
+function next() { //calls the next question
   clearTimeout(explanationTimer);
   questCount++;
   timerReset();
@@ -151,34 +151,34 @@ function next() {
 
 }
 
-function timeUp() {
+function timeUp() { //function for when the time is up
   losses++;
   showExplanation();
   //next();
 }
 
 function answer() {
-  console.log($(this).attr("data-value"));
+  console.log($(this).attr("data-value")); //logs whether the answer is true or false
 
-  if ($(this).attr("data-value") == "true") {
+  if ($(this).attr("data-value") == "true") { //if the answer is correct
       wins++;
       next();
       // console.log("wins " + wins);
   } 
   
-  else {
+  else { //if the answer is incorrect
       losses++;
       showExplanation();
       // console.log("losses " + losses);
   }
 }
 
-function gameStart() {
-  shuffleArray(trivQuestion);
-  questionDisplay(questCount);
+function gameStart() { //starts the game
+  shuffleArray(trivQuestion); //shuffles the array of questions to randomize it
+  questionDisplay(questCount); //calls the question display function based on the question counter
 }
 
-function results() {
+function results() { //displays the results of the game
   console.log("Results function ran");
   container = $("#container").detach();
   $("#header").append(containerResults);
@@ -191,9 +191,8 @@ function results() {
   $("#results-timer").text("Time until next game: " + resetCount);
 }
 
-//Need to add reset function
 
-function reset() {
+function reset() { //resets the game
   clearTimeout(gameResetTimer);
   clearTimeout(countResetTimer);
   containerResults = $("#container-results").detach();
@@ -207,17 +206,17 @@ function reset() {
   gameStart();
 }
 
-function runHover() {
+function runHover() { //runs this when the user hovers over the answer
   $(this).attr("class", "answer enlarged-text");
 }
 
-function unhover() {
+function unhover() { //runs this when the user stops hovering over the answer
   $(this).attr("class", "answer normal-text");
 }
 
 //Done defining functions
 
-window.onload = function() {
+window.onload = function() { //looks for clicks when the browser is opened
   $(".answer").on("click", answer);
   $(".answer").hover(runHover, unhover);
 };
